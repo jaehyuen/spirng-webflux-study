@@ -11,10 +11,10 @@ import com.study.webflux.domain.Item;
 public class RepositoryDatabaseLoader {
 
 	@Bean
-	CommandLineRunner init(MongoOperations operations) {
-		return args ->{
-			operations.save(new Item("Alf larm clock",19.99));
-			operations.save(new Item("Smurf TV tray",24.99));
+	CommandLineRunner initialize(MongoOperations mongo) {
+		return args -> {
+			mongo.save(new Item("Alf alarm clock", 19.99));
+			mongo.save(new Item("Smurf TV tray", 24.99));
 		};
 	}
 
