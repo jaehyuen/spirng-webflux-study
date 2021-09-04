@@ -1,10 +1,19 @@
 package com.study.webflux.domain;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@RequiredArgsConstructor
+@Data
 public class CartItem {
 
-	private final Item item;
-	private final int quantity;
+	private Item item;
+	private int quantity;
+
+	public CartItem(Item item) {
+		this.item = item;
+		this.quantity = 1;
+	}
+
+	public void increment() {
+		this.quantity++;
+	}
 }

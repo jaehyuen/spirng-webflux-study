@@ -2,9 +2,10 @@ package com.study.webflux.domain;
 
 import org.springframework.data.annotation.Id;
 
-import lombok.NoArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+@Data
 @RequiredArgsConstructor
 public class Item {
 

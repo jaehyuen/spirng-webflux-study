@@ -1,8 +1,12 @@
-HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/chaincode/
+/wallet/
+/crypto-config/
+/compose-files/
+/channel-artifacts/
 
 ### STS ###
 .apt_generated
@@ -31,3 +35,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/.DS_Store
+/config.properties
+bin/
