@@ -10,16 +10,23 @@ import com.study.webflux.domain.Cart;
 import com.study.webflux.domain.CartItem;
 import com.study.webflux.repository.CartRepository;
 import com.study.webflux.repository.ItemRepository;
+import com.study.webflux.service.CartService;
 
-import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
 
-	private final CartRepository cartRepository;
-	private final ItemRepository itemRepository;
+	private ItemRepository itemRepository;
+	private CartRepository cartRepository;
+	private CartService cartService;
+
+	public HomeController(ItemRepository itemRepository, // <2>
+			CartRepository cartRepository, CartService cartService) {
+		this.itemRepository = itemRepository;
+		this.cartRepository = cartRepository;
+		this.cartService = cartService;
+	}
 
 	@GetMapping
 	Mono<Rendering> home() { // <1>
@@ -34,26 +41,7 @@ public class HomeController {
 
 	@PostMapping("/add/{id}") // <1>
 	Mono<String> addToCart(@PathVariable String id) { // <2>
-		return this.cartRepository.findById("My Cart") //
-				.defaultIfEmpty(new Cart("My Cart")) // <3>
-				.flatMap(cart -> cart.getCartItems().stream() // <4>
-						.filter(cartItem -> cartItem.getItem() //
-								.getId().equals(id)) //
-						.findAny() //
-						.map(cartItem -> {
-							cartItem.increment();
-							return Mono.just(cart);
-						}) //
-						.orElseGet(() -> { // <5>
-							return this.itemRepository.findById(id) //
-									.map(item -> new CartItem(item)) //
-									.map(cartItem -> {
-										cart.getCartItems().add(cartItem);
-										return cart;
-									});
-						}))
-				.flatMap(cart -> this.cartRepository.save(cart)) // <6>
-				.thenReturn("redirect:/"); // <7>
+		return this.cartService.addToCart("My Cart", id).thenReturn("redirect:/");
 	}
 
 }

@@ -1,12 +1,12 @@
 package com.study.webflux.domain;
 
-import lombok.Data;
-
-@Data
 public class CartItem {
 
 	private Item item;
 	private int quantity;
+
+	private CartItem() {
+	}
 
 	public CartItem(Item item) {
 		this.item = item;
@@ -15,5 +15,21 @@ public class CartItem {
 
 	public void increment() {
 		this.quantity++;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 }
